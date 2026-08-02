@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Filali – Pneumologie & Allergologie | Cabinet Médical</title>
+    <meta name="description" content="Cabinet médical spécialisé en pneumologie et allergologie à Bordj El Bahri, Alger. Prenez rendez-vous en ligne pour vos consultations, tests respiratoires et suivi d'asthme.">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F766E',
+                        secondary: '#14B8A6',
+                        accent: '#ECFEFF',
+                        darkslate: '#0F172A',
+                        lightgray: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom smooth utilities and scrollbar */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            background-color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        /* Fade in up animation classes for IntersectionObserver */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            company: #CBD5E1;
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-teal-100 selection:text-teal-900">
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white transition-opacity duration-500">
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-12 h-12 border-4 border-teal-100 border-t-primary rounded-full animate-spin"></div>
+            <span class="text-sm font-medium text-slate-500 tracking-wider">DR. FILALI CLINIC</span>
+        </div>
+    </div>
+
+    <!-- 1. Sticky Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-primary transition-transform group-hover:scale-105">
+                        <i class="fa-solid fa-stethoscope text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="block font-bold text-slate-900 tracking-tight leading-none text-lg">Dr. Filali</span>
+                        <span class="block text-xs font-medium text-primary mt-1 tracking-wide">Pneumologie & Allergologie</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm font-medium text-slate-600 hover:text-primary transition-colors active">Accueil</a>
+                    <a href="#services" class="nav-link text-sm font-medium text-slate-600 hover:text-primary transition-colors">Services</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-slate-600 hover:text-primary transition-colors">À propos</a>
+                    <a href="#reservation" class="nav-link text-sm font-medium text-slate-600 hover:text-primary transition-colors">Rendez-vous</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-slate-600 hover:text-primary transition-colors">Contact</a>
+                </nav>
+
+                <!-- Desktop CTA -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="tel:0556788936" class="text-sm font-semibold text-slate-700 hover:text-primary flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-primary"></i>
+                        <span>0556 78 89 36</span>
+                    </a>
+                    <a href="#reservation" class="bg-primary hover:bg-teal-800 text-white font-medium text-sm px-5 py-2.5 rounded-xl shadow-sm hover:shadow transition-all duration-200">
+                        Prendre RDV
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button id="menu-btn" class="md:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-50 focus:outline-none" aria-label="Menu">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-100 shadow-lg px-6 py-6 space-y-4">
+            <a href="#home" class="mobile-link block text-base font-medium text-slate-700 hover:text-primary">Accueil</a>
+            <a href="#services" class="mobile-link block text-base font-medium text-slate-700 hover:text-primary">Services</a>
+            <a href="#about" class="mobile-link block text-base font-medium text-slate-700 hover:text-primary">À propos</a>
+            <a href="#reservation" class="mobile-link block text-base font-medium text-slate-700 hover:text-primary">Rendez-vous</a>
+            <a href="#contact" class="mobile-link block text-base font-medium text-slate-700 hover:text-primary">Contact</a>
+            <div class="pt-4 border-t border-slate-100 flex flex-col gap-3">
+                <a href="tel:0556788936" class="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <i class="fa-solid fa-phone text-primary"></i> 0556 78 89 36
+                </a>
+                <a href="#reservation" class="w-full text-center bg-primary text-white font-medium text-sm py-3 rounded-xl shadow-sm">
+                    Prendre RDV
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main id="home">
+        
+        <!-- 2. Hero Section -->
+        <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-gradient-to-b from-teal-50/40 to-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                    
+                    <!-- Left Column -->
+                    <div class="lg:col-span-7 space-y-6 text-left reveal">
+                        <!-- Badges -->
+                        <div class="flex flex-wrap items-center gap-3">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Ouvert • Ferme à 16:00
+                            </span>
+                            <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                                <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
+                                <span>4.0 (Avis patients)</span>
+                            </div>
+                        </div>
+
+                        <!-- Main Headings -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-[1.15]">
+                            Cabinet Médical <br class="hidden sm:inline">
+                            <span class="text-primary">Dr. Filali</span>
+                        </h1>
+                        <p class="text-lg sm:text-xl font-medium text-slate-600">
+                            Spécialiste en Pneumologie & Allergologie
+                        </p>
+                        
+                        <!-- Description -->
+                        <p class="text-slate-500 text-base sm:text-lg max-w-xl leading-relaxed">
+                            Prise en charge experte des pathologies respiratoires, asthme, allergies et explorations fonctionnelles respiratoires dans un cadre moderne et accueillant à Bordj El Bahri.
+                        </p>
+
+                        <!-- Action Buttons -->
+                        <div class="flex flex-wrap items-center gap-4 pt-2">
+                            <a href="#reservation" class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-teal-800 text-white font-medium px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-sm">
+                                <span>Prendre Rendez-vous</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="tel:0556788936" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-medium px-6 py-3.5 rounded-xl border border-slate-200 shadow-sm transition-all duration-200 text-sm">
+                                <i class="fa-solid fa-phone text-primary"></i>
+                                <span>0556 78 89 36</span>
+                            </a>
+                        </div>
+
+                        <!-- Mini Highlights info -->
+                        <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/60 max-w-lg">
+                            <div>
+                                <span class="block text-2xl font-bold text-slate-900">15+</span>
+                                <span class="text-xs text-slate-500">Ans d'expérience</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold text-slate-900">5k+</span>
+                                <span class="text-xs text-slate-500">Patients suivis</span>
+                            </div>
+                            <div>
+                                <span class="block text-2xl font-bold text-slate-900">100%</span>
+                                <span class="text-xs text-slate-500">Écoute & Soins</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Medical Image Placeholder Card + Floating badges -->
+                    <div class="lg:col-span-5 relative reveal">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <!-- Main Card Image placeholder -->
+                            <div class="bg-gradient-to-tr from-teal-900 to-primary rounded-3xl p-2 shadow-2xl">
+                                <div class="bg-slate-900 rounded-[22px] overflow-hidden relative aspect-[4/5] flex items-center justify-center">
+                                    <!-- High quality modern aesthetic photo representation via Unsplash -->
+                                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=1000&auto=format&fit=crop" alt="Dr Filali Cabinet Medical" class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-overlay">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                                    
+                                    <div class="absolute bottom-8 left-8 right-8 text-white">
+                                        <span class="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-wider mb-3 inline-block">Cabinet d'Excellence</span>
+                                        <h3 class="text-xl font-bold">Dr. Filali</h3>
+                                        <p class="text-teal-200 text-sm mt-1">Pneumologue & Allergologue</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Floating Card 1: Experience -->
+                            <div class="absolute -top-6 -left-6 bg-white/90 backdrop-blur-md border border-slate-100 p-4 rounded-2xl shadow-xl hidden sm:flex items-center gap-3.5 animate-bounce [animation-duration:6s]">
+                                <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-primary font-bold">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-500 font-medium">Expertise</span>
+                                    <span class="block text-sm font-bold text-slate-900">Spécialiste Certifié</span>
+                                </div>
+                            </div>
+
+                            <!-- Floating Card 2: Location -->
+                            <div class="absolute -bottom-6 -right-6 bg-white/90 backdrop-blur-md border border-slate-100 p-4 rounded-2xl shadow-xl hidden sm:flex items-center gap-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-primary font-bold">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-500 font-medium">Localisation</span>
+                                    <span class="block text-sm font-bold text-slate-900">Café Chergui, Bordj El Bahri</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Services Section -->
+        <section id="services" class="py-20 md:py-32 bg-slate-50/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                    <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Nos Domaines d'Expertise</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Services Médicaux Spécialisés</h2>
+                    <p class="text-slate-500 mt-4 text-base sm:text-lg">Une prise en charge globale et personnalisée de vos troubles respiratoires et allergies.</p>
+                </div>
+
+                <!-- Services Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Service 1 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6 transition-transform group-hover:scale-110">
+                                <i class="fa-solid fa-lungs"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Pulmonary Consultation</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Évaluation clinique approfondie des symptômes respiratoires, essoufflements, toux chroniques et pathologies pulmonaires diverses.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fa-solid fa-wind"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Asthma Management</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Diagnostic précis, élaboration de plans d'action personnalisés et suivi régulier pour contrôler l'asthme au quotidien.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Allergy Diagnosis</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Tests cutanés et bilans allergologiques complets pour identifier les allergènes responsables de vos réactions (pollens, acariens, etc.).</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fa-solid fa-wave-square"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Respiratory Function Tests</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Spirométrie et explorations fonctionnelles respiratoires (EFR) pour mesurer la capacité pulmonaire et le débit d'air.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Allergy Follow-up</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Suivi des désensibilisations, conseils d'éviction des allergènes et adaptation des traitements antihistaminiques.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between reveal">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-teal-50 flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-3">Chronic Respiratory Disease Care</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Prise en charge au long cours de la BPCO, de la fibrose pulmonaire et accompagnement des patients insuffisants respiratoires.</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-primary">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Why Choose Our Clinic -->
+        <section id="about" class="py-20 md:py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <div class="lg:col-span-5 reveal">
+                        <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Pourquoi Nous Choisir</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+                            Engagement pour votre santé respiratoire
+                        </h2>
+                        <p class="text-slate-500 mt-4 text-base leading-relaxed">
+                            Notre cabinet met un point d'honneur à offrir des soins de qualité supérieure, combinant expertise médicale avérée, écoute attentive et équipements modernes.
+                        </p>
+                        
+                        <div class="mt-8">
+                            <a href="#reservation" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all shadow-sm">
+                                <span>Prendre un rendez-vous</span>
+                                <i class="fa-solid fa-calendar text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            
+                            <!-- Feature 1 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Experienced Specialist</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Un parcours rigoureux et des années d'expérience dans le traitement des pathologies pulmonaires.</p>
+                            </div>
+
+                            <!-- Feature 2 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-hands-holding-child"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Personalized Care</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Chaque patient bénéficie d'une attention sur mesure et d'un plan thérapeutique adapté.</p>
+                            </div>
+
+                            <!-- Feature 3 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-microscope"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Modern Equipment</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Appareils de spirométrie et d'exploration fonctionnelle de dernière génération.</p>
+                            </div>
+
+                            <!-- Feature 4 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Accurate Diagnosis</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Précision dans les bilans allergologiques et pulmonaires pour des résultats fiables.</p>
+                            </div>
+
+                            <!-- Feature 5 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-hospital"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Comfortable Environment</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Un cabinet propre, calme et pensé pour le confort et la sérénité des patients.</p>
+                            </div>
+
+                            <!-- Feature 6 -->
+                            <div class="p-6 rounded-2xl bg-slate-50/70 border border-slate-100 reveal">
+                                <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary flex items-center justify-center text-lg mb-4">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-lg mb-2">Easy Appointment</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Réservation rapide en ligne ou par téléphone avec un minimum d'attente sur place.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Reservation Section -->
+        <section id="reservation" class="py-20 md:py-32 bg-slate-50/50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Prenez RDV En Ligne</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Réservez votre consultation</h2>
+                    <p class="text-slate-500 mt-4 text-base">Remplissez le formulaire ci-dessous pour planifier votre visite au cabinet médical.</p>
+                </div>
+
+                <!-- Form Card -->
+                <div class="bg-white p-8 sm:p-12 rounded-3xl border border-slate-100 shadow-xl reveal">
+                    <form id="appointment-form" class="space-y-6" novalidate>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Full Name -->
+                            <div>
+                                <label for="fullname" class="block text-sm font-semibold text-slate-700 mb-2">Nom complet *</label>
+                                <input type="text" id="fullname" name="fullname" required placeholder="ex. Mohamed Benali"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm">
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez entrer votre nom complet.</span>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div>
+                                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-2">Numéro de téléphone *</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="ex. 0550123456"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm">
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez entrer un numéro valide.</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Adresse Email *</label>
+                                <input type="email" id="email" name="email" required placeholder="ex. mohamed@example.com"
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm">
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez entrer un email valide.</span>
+                            </div>
+
+                            <!-- Reason for Visit -->
+                            <div>
+                                <label for="reason" class="block text-sm font-semibold text-slate-700 mb-2">Motif de consultation *</label>
+                                <select id="reason" name="reason" required
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm bg-white">
+                                    <option value="">Sélectionnez un motif</option>
+                                    <option value="Consultation Pneumologie">Consultation Pneumologie</option>
+                                    <option value="Suivi Asthme">Suivi Asthme</option>
+                                    <option value="Bilan Allergologique">Bilan Allergologique</option>
+                                    <option value="Exploration (EFR)">Exploration Fonctionnelle (EFR)</option>
+                                    <option value="Autre motif">Autre motif</option>
+                                </select>
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez sélectionner un motif.</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <!-- Preferred Date -->
+                            <div>
+                                <label for="date" class="block text-sm font-semibold text-slate-700 mb-2">Date souhaitée *</label>
+                                <input type="date" id="date" name="date" required
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm">
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez choisir une date.</span>
+                            </div>
+
+                            <!-- Preferred Time -->
+                            <div>
+                                <label for="time" class="block text-sm font-semibold text-slate-700 mb-2">Heure souhaitée *</label>
+                                <select id="time" name="time" required
+                                    class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm bg-white">
+                                    <option value="">Sélectionnez un créneau</option>
+                                    <option value="09:00">09:00 - 10:00</option>
+                                    <option value="10:00">10:00 - 11:00</option>
+                                    <option value="11:00">11:00 - 12:00</option>
+                                    <option value="13:00">13:00 - 14:00</option>
+                                    <option value="14:00">14:00 - 15:00</option>
+                                    <option value="15:00">15:00 - 16:00</option>
+                                </select>
+                                <span class="error-msg text-xs text-rose-500 mt-1 hidden">Veuillez choisir une heure.</span>
+                            </div>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Message additionnel (Optionnel)</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Précisez vos symptômes ou remarques particulières..."
+                                class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-teal-100 outline-none transition-all text-sm"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div>
+                            <button type="submit" id="submit-btn" class="w-full bg-primary hover:bg-teal-800 text-white font-semibold py-4 px-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-base flex items-center justify-center gap-2">
+                                <span>Confirmer la demande de rendez-vous</span>
+                                <i class="fa-solid fa-check text-sm"></i>
+                            </button>
+                        </div>
+
+                        <!-- Success Alert Message Box -->
+                        <div id="success-alert" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>
+                            <div>
+                                <span class="font-bold block">Demande envoyée avec succès !</span>
+                                <span>Le Dr. Filali ou son équipe vous contactera rapidement pour confirmer votre rendez-vous.</span>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. Clinic Information & 7. Google Map -->
+        <section id="contact" class="py-20 md:py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Informations Pratiques</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Où nous trouver</h2>
+                    <p class="text-slate-500 mt-4 text-base">Venez nous rendre visite au cabinet ou contactez-nous directement.</p>
+                </div>
+
+                <!-- Info Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    
+                    <!-- Card 1: Address -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center reveal">
+                        <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary mx-auto flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Adresse</h3>
+                        <p class="text-slate-500 text-sm">Café Chergui,<br>Bordj El Bahri, Alger</p>
+                    </div>
+
+                    <!-- Card 2: Phone -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center reveal">
+                        <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary mx-auto flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Téléphone</h3>
+                        <p class="text-slate-500 text-sm mt-1">
+                            <a href="tel:0556788936" class="hover:text-primary font-medium">0556 78 89 36</a>
+                        </p>
+                    </div>
+
+                    <!-- Card 3: Working Hours & Status -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center reveal">
+                        <div class="w-12 h-12 rounded-xl bg-teal-100/60 text-primary mx-auto flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Horaires & Statut</h3>
+                        <p class="text-slate-500 text-sm">Samedi - Jeudi : 08:30 - 16:00<br>
+                            <span class="inline-block mt-1 font-semibold text-emerald-600">Ouvert • Ferme à 16:00</span>
+                        </p>
+                    </div>
+
+                    <!-- Card 4: Rating -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center reveal">
+                        <div class="w-12 h-12 rounded-xl bg-amber-100/60 text-amber-600 mx-auto flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Évaluation</h3>
+                        <p class="text-slate-500 text-sm mt-1">
+                            <span class="font-bold text-slate-900 text-base">4.0 / 5.0</span><br>
+                            Basé sur les avis patients
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- 7. Google Map container -->
+                <div class="rounded-3xl overflow-hidden shadow-lg border border-slate-200 relative reveal">
+                    <div class="w-full h-[450px]">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.334!2d3.245!3d36.782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQsO3cmRqIEVsIEJhaHJp!5e0!3m2!1sfr!2sdz!4v1650000000000!5m2!1sfr!2sdz" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Cabinet Dr Filali Localisation">
+                        </iframe>
+                    </div>
+                    <!-- Get Directions overlay CTA button -->
+                    <div class="absolute bottom-6 right-6 z-10">
+                        <a href="https://maps.google.com/?q=Café+Chergui+Bordj+El+Bahri" target="_blank" rel="noopener noreferrer" 
+                           class="bg-white hover:bg-slate-50 text-slate-900 font-semibold px-5 py-3 rounded-xl shadow-lg border border-slate-200 flex items-center gap-2 text-sm transition-all">
+                            <i class="fa-solid fa-diamond-turn-right text-primary"></i>
+                            <span>Obtenir l'itinéraire</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 8. Testimonials Section -->
+        <section class="py-20 md:py-32 bg-slate-50/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Témoignages</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Ce que disent nos patients</h2>
+                    <p class="text-slate-500 mt-4 text-base">La satisfaction et le bien-être de nos patients sont au cœur de notre engagement quotidien.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between reveal">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-500 text-sm mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">
+                                "Un médecin exceptionnel, très à l'écoute et pédagogue. Grâce au suivi régulier de mon asthme, ma qualité de vie s'est nettement améliorée. Je recommande vivement."
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-teal-50 text-primary font-bold flex items-center justify-center text-sm">
+                                KB
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Karim Boudiaf</h4>
+                                <span class="text-xs text-slate-400">Patient suivi pour asthme</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between reveal">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-500 text-sm mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">
+                                "Cabinet très propre, moderne et bien équipé à Bordj El Bahri. Le Dr. Filali a su diagnostiquer rapidement mon allergie saisonnière avec des tests précis."
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-teal-50 text-primary font-bold flex items-center justify-center text-sm">
+                                YM
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Yasmine Mansouri</h4>
+                                <span class="text-xs text-slate-400">patiente en allergologie</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between reveal">
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-500 text-sm mb-4">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-slate-600 text-sm leading-relaxed italic">
+                                "Accueil chaleureux, ponctualité et professionnalisme irréprochable. C'est un réel soulagement d'avoir un spécialiste de cette qualité dans notre quartier."
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-teal-50 text-primary font-bold flex items-center justify-center text-sm">
+                                AZ
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Ahmed Ziani</h4>
+                                <span class="text-xs text-slate-400">Patient pneumologie</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 9. FAQ Section -->
+        <section class="py-20 md:py-32 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                    <span class="text-primary font-semibold text-sm tracking-wider uppercase mb-3 block">Questions Fréquentes</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Tout ce que vous devez savoir</h2>
+                    <p class="text-slate-500 mt-4 text-base">Consultez les réponses aux questions les plus fréquemment posées par nos patients.</p>
+                </div>
+
+                <div class="space-y-4 reveal">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button class="faq-toggle w-full p-6 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50/50 transition-colors">
+                            <span class="font-bold text-slate-900 text-base">How do I book? (Comment puis-je réserver ?)</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+                            Vous pouvez réserver directement en remplissant notre formulaire de réservation en ligne sur ce site web, ou en nous contactant directement par téléphone au 0556 78 89 36 durant les horaires d'ouverture.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button class="faq-toggle w-full p-6 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50/50 transition-colors">
+                            <span class="font-bold text-slate-900 text-base">What diseases are treated? (Quelles maladies sont traitées ?)</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+                            Le cabinet traite l'ensemble des pathologies respiratoires et allergiques : asthme, bronchopneumopathie chronique obstructive (BPCO), toux chronique, allergies respiratoires (rhinites, conjonctivites allergiques), ainsi que les explorations fonctionnelles respiratoires.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button class="faq-toggle w-full p-6 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50/50 transition-colors">
+                            <span class="font-bold text-slate-900 text-base">Do I need an appointment? (Ai-je besoin d'un rendez-vous ?)</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+                            Il est fortement recommandé de prendre rendez-vous à l'avance pour garantir une prise en charge rapide et éviter l'attente prolongée au cabinet.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="border border-slate-200 rounded-2xl overflow-hidden transition-all">
+                        <button class="faq-toggle w-full p-6 text-left flex items-center justify-between gap-4 bg-white hover:bg-slate-50/50 transition-colors">
+                            <span class="font-bold text-slate-900 text-base">Accepted payment methods? (Quels sont les modes de paiement acceptés ?)</span>
+                            <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden px-6 pb-6 text-slate-600 text-sm leading-relaxed">
+                            Nous acceptons les paiements en espèces directement au cabinet lors de la consultation.
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 10. Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Col 1: Brand -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-teal-900/50 flex items-center justify-center text-teal-400">
+                            <i class="fa-solid fa-stethoscope text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="block font-bold text-white text-lg leading-none">Dr. Filali</span>
+                            <span class="block text-xs font-medium text-teal-400 mt-1">Pneumologie & Allergologie</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Cabinet médical spécialisé offrant des soins de santé respiratoire et allergologique de premier plan à Bordj El Bahri, Alger.
+                    </p>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm uppercase tracking-wider mb-4">Liens Rapides</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#home" class="hover:text-white transition-colors">Accueil</a></li>
+                        <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">À propos</a></li>
+                        <li><a href="#reservation" class="hover:text-white transition-colors">Prendre Rendez-vous</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Contact Info -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm uppercase tracking-wider mb-4">Contact</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-teal-400 mt-1"></i>
+                            <span>Café Chergui, Bordj El Bahri, Alger</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-teal-400"></i>
+                            <a href="tel:0556788936" class="hover:text-white">0556 78 89 36</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-clock text-teal-400"></i>
+                            <span>Sam - Jeu : 08:30 - 16:00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Socials & Newsletter style -->
+                <div>
+                    <h4 class="font-semibold text-white text-sm uppercase tracking-wider mb-4">Réseaux Sociaux</h4>
+                    <p class="text-sm text-slate-400 mb-4">Suivez nos actualités et conseils de santé sur nos réseaux.</p>
+                    <div class="flex items-center gap-3">
+                        <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-xl bg-slate-900 hover:bg-teal-900 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-xl bg-slate-900 hover:bg-teal-900 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-xl bg-slate-900 hover:bg-teal-900 text-white flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Dr. Filali - Pneumologie & Allergologie. Tous droits réservés.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-slate-400 transition-colors">Mentions légales</a>
+                    <a href="#" class="hover:text-slate-400 transition-colors">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Retour en haut" class="fixed bottom-6 right-6 z-30 w-12 h-12 bg-primary hover:bg-teal-800 text-white rounded-2xl shadow-xl flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-300">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Vanilla JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Loading Screen removal
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 500);
+            }
+
+            // 2. Mobile Menu Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = menuBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.className = 'fa-solid fa-bars text-xl';
+                    } else {
+                        icon.className = 'fa-solid fa-xmark text-xl';
+                    }
+                });
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuBtn.querySelector('i').className = 'fa-solid fa-bars text-xl';
+                    });
+                });
+            }
+
+            // 3. Navbar scroll effect & Back to top button
+            const navbar = document.getElementById('navbar');
+            const backToTopBtn = document.getElementById('back-to-top');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('shadow-md');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                }
+
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+                } else {
+                    backToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                }
+            });
+
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            // 4. Scroll Reveal Animations via IntersectionObserver
+            const revealElements = document.querySelectorAll('.reveal');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 5. FAQ Accordion functionality
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('i');
+                    
+                    // Close other open items
+                    faqToggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.nextElementSibling.classList.add('hidden');
+                            otherToggle.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    content.classList.toggle('hidden');
+                    if (content.classList.contains('hidden')) {
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // 6. Form Validation & Submission Handling
+            const form = document.getElementById('appointment-form');
+            const successAlert = document.getElementById('success-alert');
+
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    let isValid = true;
+
+                    // Simple validation checks
+                    const fullname = document.getElementById('fullname');
+                    const phone = document.getElementById('phone');
+                    const email = document.getElementById('email');
+                    const reason = document.getElementById('reason');
+                    const date = document.getElementById('date');
+                    const time = document.getElementById('time');
+
+                    const fields = [fullname, phone, email, reason, date, time];
+
+                    fields.forEach(field => {
+                        const errorMsg = field.parentElement.querySelector('.error-msg');
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.classList.add('border-rose-500');
+                            if (errorMsg) errorMsg.classList.remove('hidden');
+                        } else {
+                            field.classList.remove('border-rose-500');
+                            if (errorMsg) errorMsg.classList.add('hidden');
+                        }
+                    });
+
+                    // Email specific validation check
+                    if (email.value.trim() && !email.value.includes('@')) {
+                        isValid = false;
+                        email.classList.add('border-rose-500');
+                        const errorMsg = email.parentElement.querySelector('.error-msg');
+                        if (errorMsg) {
+                            errorMsg.textContent = 'Veuillez entrer une adresse email valide.';
+                            errorMsg.classList.remove('hidden');
+                        }
+                    }
+
+                    if (isValid) {
+                        // Simulate successful reservation submission
+                        const submitBtn = document.getElementById('submit-btn');
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Traitement en cours...';
+
+                        setTimeout(() => {
+                            submitBtn.innerHTML = '<span>Demande envoyée</span> <i class="fa-solid fa-check"></i>';
+                            successAlert.classList.remove('hidden');
+                            form.reset();
+                            
+                            setTimeout(() => {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<span>Confirmer la demande de rendez-vous</span> <i class="fa-solid fa-check text-sm"></i>';
+                            }, 4000);
+                        }, 1000);
+                    }
+                });
+            }
+
+            // 7. Active Navigation Link highlighting based on scroll
+            const sections = document.querySelectorAll('main section, header');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 120)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-primary', 'font-bold');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('text-primary', 'font-bold');
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
